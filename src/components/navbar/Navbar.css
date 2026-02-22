@@ -1,0 +1,101 @@
+
+.active-link {
+    color: #2d8a2d;
+    font-weight: 400;
+    text-decoration: none;
+
+}
+/* Navbar Container */
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px ;
+    background-color: #f8f7f2;
+    border-bottom: 1px solid #dee2e6;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+}
+
+/* Logo/Brand Section */
+.navbar-container > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 3.5rem;
+}
+.logo {
+    width: 50px;
+    height: 50px;
+    color: black;
+    background-color: black;
+    margin: 20px;
+}
+.text-logo {
+    font-size: 2.7rem;
+    font-weight: 700;
+    color: #131313;
+    text-decoration: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    
+}
+
+/* Navigation Links */
+.normal-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 4px;
+    text-decoration: none;
+    ;
+}
+
+.normal-link:hover {
+    color: #2d8a2d;
+    background-color: rgba(45, 138, 45, 0.1);
+}
+
+
+/* Right section (Login, Cart) */
+.navbar-container > div:last-child {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* Login and Cart links (without nav-link class) */
+.navbar-container > div:last-child a:active {
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 4px;
+}
+
+.navbar-container > div:last-child a:hover {
+    color: #2d8a2d;
+    background-color: rgba(45, 138, 45, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar-container {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .navbar-container > div:first-child {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+
+    .navbar-container > div:last-child {
+        gap: 1rem;
+    }
+}
