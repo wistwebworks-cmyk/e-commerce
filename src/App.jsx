@@ -1,17 +1,18 @@
 import './App.css';
 import Navbar from './components/navbar/Navbar.jsx';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home.jsx';
-import About from './pages/About.jsx';
-import Shop from './pages/Shop.jsx';
-import Cart from './pages/Cart.jsx';
-import Details from './pages/Details.jsx';
-import Confirm from './pages/Confirm.jsx';
-import Thanks from './pages/Thanks.jsx';
-import Refund from './pages/Refund.jsx';
-import Login from './pages/Login.jsx';
-import Shipping from './pages/Shipping.jsx';
-import Admin from './pages/Admin.jsx';
+import Home from './Pages/Home.jsx';
+import About from './Pages/About.jsx';
+import Shop from './Pages/Shop.jsx';
+import Cart from './Pages/Cart.jsx';
+import Details from './Pages/Details.jsx';
+import Confirm from './Pages/Confirm.jsx';
+import Thanks from './Pages/Thanks.jsx';
+import Refund from './Pages/Refund.jsx';
+import Login from './Pages/Login.jsx';
+import Shipping from './Pages/Shipping.jsx';
+import Contact from './Pages/Contact.jsx';
+import Admin from './Pages/Admin.jsx';
 
 function App() {
     return (
@@ -30,6 +31,7 @@ function App() {
                     <Route path="/refund" element={<Refund />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/shipping" element={<Shipping />} />
+                    <Route path="/contact" element={<Contact />} />
                     <Route path="/admin" element={<Admin />} />
                 </Routes>
             </div>
