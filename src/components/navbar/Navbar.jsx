@@ -24,11 +24,11 @@ const Navbar = () => {
         <NavLink to="/" className={({ isActive }) => isActive ? "active-link" : "normal-link"} onClick={() => setIsOpen(false)}>
          Home
          </NavLink>
-        <NavLink to="/about" className={({ isActive }) => isActive ? "active-link" : "normal-link"} onClick={() => setIsOpen(false)}>
-        About
+         <NavLink to="/shop" className={({ isActive }) => isActive ? "active-link" : "normal-link"} onClick={() => setIsOpen(false)}>
+        Shop Now
         </NavLink>
-        <NavLink to="/shop" className={({ isActive }) => isActive ? "active-link" : "normal-link"} onClick={() => setIsOpen(false)}>
-        Shop
+        <NavLink to="/about" className={({ isActive }) => isActive ? "active-link" : "normal-link"} onClick={() => setIsOpen(false)}>
+        About Us
         </NavLink>
         <NavLink to="/login" className={({ isActive }) => isActive ? "active-link" : "normal-link"} onClick={() => setIsOpen(false)}>
         Log In
@@ -37,10 +37,8 @@ const Navbar = () => {
         Cart
         </NavLink>
         <NavLink to="/contact" className={({ isActive }) => isActive ? "active-link" : "normal-link"} onClick={() => setIsOpen(false)}>
-        Contact
+        Contact Us
         </NavLink>
-        
-
       </div>
       <div className="hamburger" onClick={toggleMenu}>
         <span></span>

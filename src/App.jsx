@@ -1,6 +1,7 @@
+import { motion, useScroll, useSpring } from "framer-motion";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/navbar/Navbar.jsx';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home.jsx';
 import About from './Pages/About.jsx';
 import Shop from './Pages/Shop.jsx';
@@ -14,28 +15,55 @@ import Shipping from './Pages/Shipping.jsx';
 import Contact from './Pages/Contact.jsx';
 import Admin from './Pages/Admin.jsx';
 
+function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  return (
+    <motion.div
+      style={{
+        scaleX,
+        transformOrigin: "0%",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        height: "4px",
+        background: "#1b2d1b",
+        zIndex: 9999
+      }}
+    />
+  );
+}
+
 function App() {
     return (
         <BrowserRouter>
-            <div> 
+            <> 
                 <Navbar />
+                <ScrollProgress />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/shop" element={<Shop />} />
+                    <Route path="/shop-now" element={<Shop />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/details" element={<Details />} />
-                    <Route path="/confirm" element={<Confirm />} />
+                    <Route path="/confirm-order" element={<Confirm />} />
                     <Route path="/thanks" element={<Thanks />} />
-                    <Route path="/refund" element={<Refund />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/shipping" element={<Shipping />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/admin" element={<Admin />} />
+                    <Route path="/refund-policy" element={<Refund />} />
+                    <Route path="/login-signup" element={<Login />} />
+                    <Route path="/shipping-policy" element={<Shipping />} />
+                    <Route path="/contact-us" element={<Contact />} />
+                    <Route path="/admin-panel" element={<Admin />} />
                 </Routes>
-            </div>
+            </>
         </BrowserRouter>
     );
 }       
+
 export default App;
