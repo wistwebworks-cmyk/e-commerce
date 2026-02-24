@@ -2,6 +2,7 @@ import { motion, useScroll, useSpring } from "framer-motion";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/navbar/Navbar.jsx';
+import Footer from './components/Footer/Footer.jsx';
 import Home from './Pages/Home.jsx';
 import About from './Pages/About.jsx';
 import Shop from './Pages/Shop.jsx';
@@ -53,14 +54,15 @@ function App() {
                     <Route path="/shop-now" element={<Shop />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/details" element={<Details />} />
-                    <Route path="/confirm-order" element={<Confirm />} />
+                    <Route path="/confirm" element={<Confirm />} />
                     <Route path="/thanks" element={<Thanks />} />
-                    <Route path="/refund-policy" element={<Refund />} />
+                    <Route path="/refund" element={<Refund />} />
                     <Route path="/login-signup" element={<Login />} />
-                    <Route path="/shipping-policy" element={<Shipping />} />
+                    <Route path="/shipping" element={<Shipping />} />
                     <Route path="/contact-us" element={<Contact />} />
                     <Route path="/admin-panel" element={<Admin />} />
                 </Routes>
+                <Footer />
             </>
         </BrowserRouter>
     );
