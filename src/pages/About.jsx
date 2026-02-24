@@ -1,6 +1,6 @@
 import React from "react";
 import './CSS/About.css';
-import hero from '../assets/About Us.jpeg';
+import hero from '../assets/About Us.avif';
 import { motion } from 'framer-motion';
 
 
