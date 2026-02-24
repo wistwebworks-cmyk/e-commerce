@@ -1,4 +1,5 @@
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useSpring } from "framer-motion";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/navbar/Navbar.jsx';
@@ -16,8 +17,29 @@ import Contact from './Pages/Contact.jsx';
 import Admin from './Pages/Admin.jsx';
 
 function ScrollProgress() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const updateScrollProgress = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+      setScrollProgress(progress);
+      
+    };
+
+    window.addEventListener("scroll", updateScrollProgress, { passive: true });
+    window.addEventListener("resize", updateScrollProgress, { passive: true });
+    
+    updateScrollProgress();
+
+    return () => {
+      window.removeEventListener("scroll", updateScrollProgress);
+      window.removeEventListener("resize", updateScrollProgress);
+    };
+  }, []);
+
+  const scaleX = useSpring(scrollProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001
@@ -25,6 +47,7 @@ function ScrollProgress() {
 
   return (
     <motion.div
+      className="scroll-progress"
       style={{
         scaleX,
         transformOrigin: "0%",
@@ -34,7 +57,8 @@ function ScrollProgress() {
         right: 0,
         height: "4px",
         background: "#1b2d1b",
-        zIndex: 9999
+        zIndex: 99999,
+        willChange: "transform"
       }}
     />
   );
@@ -44,8 +68,8 @@ function App() {
     return (
         <BrowserRouter>
             <> 
-                <Navbar />
                 <ScrollProgress />
+                <Navbar />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/home" element={<Home />} />
@@ -58,7 +82,7 @@ function App() {
                     <Route path="/refund-policy" element={<Refund />} />
                     <Route path="/login-signup" element={<Login />} />
                     <Route path="/shipping-policy" element={<Shipping />} />
-                    <Route path="/contact-us" element={<Contact />} />
+                    <Route path="/contact" element={<Contact />} />
                     <Route path="/admin-panel" element={<Admin />} />
                 </Routes>
             </>
