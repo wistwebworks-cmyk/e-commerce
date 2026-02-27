@@ -143,6 +143,40 @@ a {
     color: #2d8a2d;
 }
 
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-name {
+    color: #333;
+    font-weight: 500;
+    font-size: 0.95rem;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.logout-btn {
+    padding: 0.5rem 1rem;
+    background: #2d8a2d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.3s;
+    font-size: 0.95rem;
+}
+
+.logout-btn:hover {
+    background: #205820;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(45, 138, 45, 0.3);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .navbar-container {
@@ -174,6 +208,16 @@ a {
 
     .navbar-links.open .close-btn {
         display: block;
+    }
+
+    .user-menu {
+        flex-direction: column;
+        width: 100%;
+        padding: 0.5rem 0;
+    }
+
+    .logout-btn {
+        width: 100%;
     }
 
     .hamburger {

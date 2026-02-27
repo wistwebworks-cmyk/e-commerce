@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import "./CSS/Auth.css";
+import "./CSS/AuthPages.css";
 
 // Icons
 const EyeIcon = () => (
@@ -38,43 +38,61 @@ const ErrorIcon = () => (
   </svg>
 );
 
-export default function Login() {
+   export default function Register() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
-  const { login, registerWithGoogle } = useAuth();
+  const { register, registerWithGoogle } = useAuth();
 
   // Map Firebase error messages to user-friendly text
   const getErrorMessage = (errorCode) => {
     const errorMap = {
       'auth/invalid-email': 'Please enter a valid email address.',
-      'auth/user-not-found': 'No account found with this email address.',
-      'auth/wrong-password': 'Incorrect password. Please try again.',
-      'auth/invalid-credential': 'Invalid email or password. Please try again.',
-      'auth/too-many-requests': 'Too many login attempts. Please try again later.',
-      'auth/account-exists-with-different-credential': 'An account already exists with this email.',
+      'auth/email-already-in-use': 'This email is already registered. Try logging in instead.',
+      'auth/weak-password': 'Password must be at least 6 characters long.',
+      'auth/operation-not-allowed': 'Email/password accounts are not enabled.',
+      'auth/too-many-requests': 'Too many signup attempts. Please try again later.',
+      'auth/invalid-credential': 'Invalid email or password.',
       'auth/network-request-failed': 'Network error. Please check your connection.',
     };
 
-    return errorMap[errorCode] || 'Failed to login. Please check your credentials and try again.';
+    return errorMap[errorCode] || 'Failed to create account. Please try again.';
   };
 
-  const handleLogin = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     
-    if (!email.trim() || !password.trim()) {
-      setErrorMsg('Please fill in all fields.');
+    // Validation
+    if (!name.trim()) {
+      setErrorMsg('Please enter your full name.');
+      return;
+    }
+
+    if (!email.trim()) {
+      setErrorMsg('Please enter your email address.');
+      return;
+    }
+
+    if (!password.trim()) {
+      setErrorMsg('Please enter a password.');
+      return;
+    }
+
+    if (password.length < 6) {
+      setErrorMsg('Password must be at least 6 characters long.');
       return;
     }
 
     setIsLoading(true);
     setErrorMsg("");
-    
+
     try {
-      await login(email, password);
+      await register(name, email, password);
+      setName("");
       setEmail("");
       setPassword("");
       navigate('/');
@@ -86,10 +104,10 @@ export default function Login() {
     }
   };
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleSignUp = async () => {
     setIsLoading(true);
     setErrorMsg("");
-    
+
     try {
       await registerWithGoogle();
       navigate('/');
@@ -118,12 +136,12 @@ export default function Login() {
         </Link>
 
         {/* Card */}
-        <div className="auth-card">
+        <div className="auth-card register-header-card">
           {/* Header */}
-          <div className="auth-header">
-            <div className="auth-header-emoji">🔑</div>
-            <h1>Welcome Back</h1>
-            <p>Login to your WistPlants account</p>
+          <div className="auth-header register-header">
+            <div className="auth-header-emoji">🌱</div>
+            <h1>Create Account</h1>
+            <p>Join WistPlants and start shopping</p>
           </div>
 
           {/* Content */}
@@ -137,12 +155,25 @@ export default function Login() {
             )}
 
             {/* Form */}
-            <form onSubmit={handleLogin} className="auth-form">
+            <form onSubmit={handleSignUp} className="auth-form">
+              {/* Name Input */}
+              <div className="form-group">
+                <label className="form-label">Full Name</label>
+                <input 
+                  type="text"
+                  placeholder="John Doe"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  disabled={isLoading}
+                  className="form-input"
+                />
+              </div>
+
               {/* Email Input */}
               <div className="form-group">
                 <label className="form-label">Email Address</label>
                 <input 
-                  type="email" 
+                  type="email"
                   placeholder="you@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -173,9 +204,10 @@ export default function Login() {
                     {showPassword ? <EyeOffIcon /> : <EyeIcon />}
                   </button>
                 </div>
+                <span className="form-hint">Must be at least 6 characters</span>
               </div>
 
-              {/* Login Button */}
+              {/* Sign Up Button */}
               <button
                 type="submit"
                 disabled={isLoading}
@@ -184,10 +216,10 @@ export default function Login() {
                 {isLoading ? (
                   <>
                     <div className="spinner"></div>
-                    Logging in...
+                    Creating Account...
                   </>
                 ) : (
-                  'Log In'
+                  'Create Account'
                 )}
               </button>
             </form>
@@ -195,13 +227,13 @@ export default function Login() {
             {/* Divider */}
             <div className="auth-divider">
               <div className="auth-divider-line"></div>
-              <span className="auth-divider-text">or continue with</span>
+              <span className="auth-divider-text">or sign up with</span>
             </div>
 
             {/* Google Button */}
             <button
               type="button"
-              onClick={handleGoogleLogin}
+              onClick={handleGoogleSignUp}
               disabled={isLoading}
               className="google-button"
             >
@@ -209,11 +241,11 @@ export default function Login() {
               Continue with Google
             </button>
 
-            {/* Sign Up Link */}
+            {/* Login Link */}
             <div className="auth-link-section">
-              Don't have an account?{' '}
-              <Link to="/register" className="auth-link">
-                Sign up
+              Already have an account?{' '}
+              <Link to="/login" className="auth-link">
+                Log in
               </Link>
             </div>
           </div>
@@ -221,7 +253,7 @@ export default function Login() {
 
         {/* Footer Note */}
         <p className="auth-footer-note">
-          By signing in, you agree to our Terms of Service and Privacy Policy
+          By creating an account, you agree to our Terms of Service and Privacy Policy
         </p>
       </div>
     </div>

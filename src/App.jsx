@@ -1,21 +1,26 @@
-import { motion, useSpring } from "framer-motion";
+import { useSpring } from "framer-motion";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
+import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/navbar/Navbar.jsx';
-import Footer from './components/Footer/Footer.jsx';
-import Home from './Pages/Home.jsx';
-import About from './Pages/About.jsx';
-import Shop from './Pages/Shop.jsx';
-import Cart from './Pages/Cart.jsx';
-import Details from './Pages/Details.jsx';
-import Confirm from './Pages/Confirm.jsx';
-import Thanks from './Pages/Thanks.jsx';
-import Refund from './Pages/Refund.jsx';
-import Login from './Pages/Login.jsx';
-import Shipping from './Pages/Shipping.jsx';
-import Contact from './Pages/Contact.jsx';
-import Admin from './Pages/Admin.jsx';
+import Footer from './components/footer/Footer.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+import Home from './pages/Home.jsx';
+import About from './pages/About.jsx';
+import Shop from './pages/Shop.jsx';
+import Cart from './pages/Cart.jsx';
+import Details from './pages/Details.jsx';
+import Confirm from './pages/Confirm.jsx';
+import Thanks from './pages/Thanks.jsx';
+import Refund from './pages/Refund.jsx';
+import Login from './pages/Login.jsx';
+import Shipping from './pages/Shipping.jsx';
+import Contact from './pages/Contact.jsx';
+import Admin from './pages/Admin.jsx';
+import { motion } from "framer-motion";
+import MainLayout from './components/layout/MainLayout.jsx';
+import Register from './pages/Register.jsx';
 
 function ScrollProgress() {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -68,28 +73,34 @@ function ScrollProgress() {
 function App() {
     return (
         <BrowserRouter>
-            <> 
-                <ScrollProgress />
-                <Navbar />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/shop-now" element={<Shop />} />
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="/details" element={<Details />} />
-                    <Route path="/confirm" element={<Confirm />} />
-                    <Route path="/thanks" element={<Thanks />} />
-                    <Route path="/refund" element={<Refund />} />
-                    <Route path="/login-signup" element={<Login />} />
-                    <Route path="/shipping" element={<Shipping />} />
-                    <Route path="/contact-us" element={<Contact />} />
-                    <Route path="/shipping-policy" element={<Shipping />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/admin-panel" element={<Admin />} />
-                </Routes>
-                <Footer />
-            </>
+            <AuthProvider>
+                <> 
+                    <ScrollProgress />
+                    
+                    <Routes>
+                      <Route element={<MainLayout />}>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/home" element={<Home />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/shop-now" element={<Shop />} />
+                        <Route path="/cart" element={<Cart />} />
+                        <Route path="/details" element={<Details />} />
+                        <Route path="/confirm" element={<Confirm />} />
+                        <Route path="/thanks" element={<Thanks />} />
+                        <Route path="/refund" element={<Refund />} />
+                        <Route path="/shipping" element={<Shipping />} />
+                        <Route path="/contact-us" element={<Contact />} />
+                        <Route path="/shipping-policy" element={<Shipping />} />
+                        <Route path="/contact" element={<Contact />} />
+                        <Route path="/admin-panel" element={<ProtectedRoute element={<Admin />} />} />
+                      </Route>
+                        
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                    </Routes>
+                    
+                </>
+            </AuthProvider>
         </BrowserRouter>
     );
 }       
