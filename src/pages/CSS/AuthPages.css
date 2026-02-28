@@ -226,7 +226,7 @@ body {
 
 .auth-card.register-header-card .form-input:focus {
   border-color: #059669;
-  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+  box-shadow: 0 0 0 3px rgba(160, 212, 153, 0.914));
 }
 
 .form-input:disabled {
