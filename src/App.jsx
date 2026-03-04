@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/navbar/Navbar.jsx';
-import Footer from './components/Footer/Footer.jsx';
 import Home from './Pages/Home.jsx';
 import About from './Pages/About.jsx';
 import Shop from './Pages/Shop.jsx';
@@ -53,6 +52,7 @@ function ScrollProgress() {
         scaleX,
         transformOrigin: "0%",
         position: "fixed",
+
         top: 0,
         left: 0,
         right: 0,
@@ -75,20 +75,18 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/about" element={<About />} />
+                    <Route path="/shop" element={<Shop />} />
                     <Route path="/shop-now" element={<Shop />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/details" element={<Details />} />
-                    <Route path="/confirm" element={<Confirm />} />
+                    <Route path="/confirm-order" element={<Confirm />} />
                     <Route path="/thanks" element={<Thanks />} />
-                    <Route path="/refund" element={<Refund />} />
+                    <Route path="/refund-policy" element={<Refund />} />
                     <Route path="/login-signup" element={<Login />} />
-                    <Route path="/shipping" element={<Shipping />} />
-                    <Route path="/contact-us" element={<Contact />} />
                     <Route path="/shipping-policy" element={<Shipping />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/admin-panel" element={<Admin />} />
                 </Routes>
-                <Footer />
             </>
         </BrowserRouter>
     );
