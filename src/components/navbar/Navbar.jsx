@@ -20,6 +20,7 @@ const Navbar = () => {
       setIsOpen(false);
       navigate('/');
     } catch (error) {
+      console.error("Logout failed:", error);
       alert("Failed to logout. Please try again.");
     }
   };
