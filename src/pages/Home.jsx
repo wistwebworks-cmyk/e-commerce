@@ -54,17 +54,17 @@ export default function Home() {
 
   return (
     <div className="home-container">
-      <section className="hero" >
+      <section className="home-hero">
         {/* LEFT SIDE */}
-        <div className="hero-left">
+        <div className="home-hero-left">
           <img
             src={Main}
             alt="Garden"
-            className="hero-bg"
+            className="home-hero-bg"
           />
 
           <motion.div
-            className="hero-glass"
+            className="home-hero-glass"
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
@@ -84,7 +84,7 @@ export default function Home() {
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="hero-right">
+        <div className="home-hero-right">
           <div className="slider-nav">
             <span onClick={prevSlide}>← Prev</span>
             <span onClick={nextSlide}>Next →</span>

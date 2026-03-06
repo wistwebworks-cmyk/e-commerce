@@ -58,6 +58,30 @@ const products = [
 const Shop = () => {
   const [price, setPrice] = useState(9999);
   const [mobileFilter, setMobileFilter] = useState(false);
+  const [sortBy, setSortBy] = useState("recommended");
+
+  const parsePrice = (value) => {
+    if (!value) return 0;
+    const numeric = parseFloat(String(value).replace(/[^\d.]/g, ""));
+    return isNaN(numeric) ? 0 : numeric;
+  };
+
+  const sortedProducts = [...products].sort((a, b) => {
+    if (sortBy === "price-asc") {
+      return parsePrice(a.price) - parsePrice(b.price);
+    }
+    if (sortBy === "price-desc") {
+      return parsePrice(b.price) - parsePrice(a.price);
+    }
+    if (sortBy === "name-asc") {
+      return a.name.localeCompare(b.name);
+    }
+    if (sortBy === "name-desc") {
+      return b.name.localeCompare(a.name);
+    }
+    // recommended (default order)
+    return 0;
+  });
 
   return (
     <div className="shop-container">
@@ -111,7 +135,7 @@ const Shop = () => {
         </motion.div>
 
         {/* Products */}
-        <div className="products-section">
+          <div className="products-section">
           <div className="sort-bar">
             <button
               className="mobile-filter-btn"
@@ -119,11 +143,24 @@ const Shop = () => {
             >
               Filters
             </button>
-            <span>Sort by: Recommended ▾</span>
+            <label className="sort-label">
+              Sort by:
+              <select
+                className="sort-select"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+              >
+                <option value="recommended">Recommended</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="name-asc">Name: A to Z</option>
+                <option value="name-desc">Name: Z to A</option>
+              </select>
+            </label>
           </div>
 
           <div className="product-grid">
-            {products.map((product, index) => (
+            {sortedProducts.map((product, index) => (
               <motion.div
                 className="product-card"
                 key={product.id}

@@ -75,8 +75,8 @@ function App() {
                     <ScrollProgress />
                     <Navbar />
                     <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/home" element={<Home />} />
+                        <Route path="/" element={<div className="page-full-bleed"><Home /></div>} />
+                        <Route path="/home" element={<div className="page-full-bleed"><Home /></div>} />
                         <Route path="/about" element={<About />} />
                         <Route path="/shop-now" element={<Shop />} />
                         <Route path="/cart" element={<Cart />} />
