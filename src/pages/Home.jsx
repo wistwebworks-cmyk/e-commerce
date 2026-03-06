@@ -12,7 +12,7 @@ import Care from "../assets/Plant Care.avif";
 import Plant2 from "../assets/plant2.avif";
 import Plant3 from "../assets/plant3.avif";
 import Said from "../assets/saidverria.avif";
-ssssss
+
 const products = [
   {
     id: 1,
