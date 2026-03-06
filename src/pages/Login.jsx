@@ -109,7 +109,6 @@ export default function Login() {
         <div className="blob-2"></div>
       </div>
 
-      {/* Main Card */}
       <div className="auth-card-wrapper">
         {/* Back Button */}
         <Link to="/" className="auth-back-button">
