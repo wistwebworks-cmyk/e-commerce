@@ -1,6 +1,6 @@
 .shop-container {
   padding: 60px 80px;
-  background: #f5f3ee;
+  background: #fffefc;
   min-height: 100vh;
   font-family: 'Inter', sans-serif;
   color: #1e2b1f;
@@ -14,6 +14,7 @@
   font-size: 52px;
   font-weight: 500;
   margin-bottom: 50px;
+  
 }
 
 .shop-layout {
@@ -182,7 +183,7 @@ input[type="range"] {
 }
 
 .price {
-  font-size: 14px;
+  font-size: 10px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -192,7 +193,7 @@ input[type="range"] {
 .old {
   text-decoration: line-through;
   opacity: 0.6;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 /* RESPONSIVE */
@@ -271,7 +272,7 @@ input[type="range"] {
   }
 
   .price {
-    font-size: 13px;
+    font-size: 10px;
   }
 
   .badge {

@@ -1,0 +1,161 @@
+.confirm-container {
+  min-height: calc(100vh - 200px);
+  background: #f5f3ee;
+  padding: 60px 24px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+  color: #1e2b1f;
+}
+
+.confirm-card {
+  max-width: 560px;
+  width: 100%;
+  background: #fffefc;
+  border-radius: 16px;
+  padding: 40px 36px;
+  box-shadow: 0 4px 24px rgba(22, 33, 22, 0.08);
+  text-align: center;
+}
+
+.confirm-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e7e3da;
+}
+
+.confirm-icon {
+  font-size: 28px;
+}
+
+.confirm-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(26px, 4.5vw, 32px);
+  font-weight: 500;
+  color: #162116;
+  margin: 0 0 10px;
+}
+
+.confirm-subtitle {
+  font-size: 15px;
+  color: #4a5a4a;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+.confirm-summary {
+  text-align: left;
+  margin-bottom: 28px;
+  padding: 18px 20px;
+  background: rgba(122, 129, 102, 0.06);
+  border-radius: 12px;
+}
+
+.confirm-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 14px;
+  color: #1e2b1f;
+  margin-bottom: 8px;
+}
+
+.confirm-row:last-child {
+  margin-bottom: 0;
+}
+
+.confirm-row-note span:last-child {
+  color: #4a5a4a;
+  max-width: 260px;
+  text-align: right;
+}
+
+.confirm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.confirm-btn {
+  padding: 13px 26px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: 0.25s ease;
+}
+
+.confirm-btn-primary {
+  background: #162116;
+  color: #ffffff;
+}
+
+.confirm-btn-primary:hover {
+  background: #1b2d1b;
+}
+
+.confirm-btn-secondary {
+  background: transparent;
+  color: #162116;
+  border: 1px solid rgba(22, 33, 22, 0.3);
+}
+
+.confirm-btn-secondary:hover {
+  background: rgba(22, 33, 22, 0.06);
+  border-color: #162116;
+}
+
+.confirm-footer-text {
+  font-size: 12px;
+  color: #6b7a6b;
+  line-height: 1.5;
+}
+
+.confirm-footer-text a {
+  color: #2d8a2d;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.confirm-footer-text a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .confirm-container {
+    padding: 40px 16px 60px;
+  }
+
+  .confirm-card {
+    padding: 32px 22px;
+  }
+
+  .confirm-actions {
+    flex-direction: column;
+  }
+
+  .confirm-btn {
+    width: 100%;
+  }
+
+  .confirm-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .confirm-row-note span:last-child {
+    text-align: left;
+    max-width: 100%;
+  }
+}
+

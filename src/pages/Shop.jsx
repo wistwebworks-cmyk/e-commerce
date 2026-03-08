@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../Pages/CSS/Shop.css";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 import A from "../assets/Cavtus Love.avif";
 import B from "../assets/saidverria.avif";
@@ -59,6 +60,7 @@ const Shop = () => {
   const [price, setPrice] = useState(9999);
   const [mobileFilter, setMobileFilter] = useState(false);
   const [sortBy, setSortBy] = useState("recommended");
+  const navigate = useNavigate();
 
   const parsePrice = (value) => {
     if (!value) return 0;
@@ -164,6 +166,7 @@ const Shop = () => {
               <motion.div
                 className="product-card"
                 key={product.id}
+                onClick={() => navigate(`/details/${product.id}`)}
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
