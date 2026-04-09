@@ -1,6 +1,8 @@
-import { useState } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { useContext, useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { FaShoppingCart, FaSignInAlt, FaUserPlus } from 'react-icons/fa'
 import { useAuth } from '../../context/AuthContext'
+import MyContext from '../../context/data/myContext'
 import logo from '../../assets/logo.png'
 import './Navbar.css'
 
@@ -8,6 +10,7 @@ import './Navbar.css'
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth();
+  const { cartCount } = useContext(MyContext);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -69,10 +72,15 @@ const Navbar = () => {
         </NavLink>
         <NavLink 
           to="/cart" 
-          className={({ isActive }) => isActive ? "active-link" : "normal-link"} 
+          className={({ isActive }) =>
+            `cart-link icon-link ${isActive ? "active-link" : "normal-link"}`
+          } 
           onClick={closeMenu}
+          aria-label="Cart"
+          title="Cart"
         >
-          Cart
+          <FaShoppingCart />
+          {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
         </NavLink>
         
         {user ? (
@@ -86,17 +94,21 @@ const Navbar = () => {
           <>
             <NavLink 
               to="/login" 
-              className={({ isActive }) => isActive ? "active-link" : "normal-link"} 
+              className={({ isActive }) => `icon-link ${isActive ? "active-link" : "normal-link"}`} 
               onClick={closeMenu}
+              aria-label="Log In"
+              title="Log In"
             >
-              Log In
+              <FaSignInAlt />
             </NavLink>
             <NavLink 
               to="/register" 
-              className={({ isActive }) => isActive ? "active-link" : "normal-link"} 
+              className={({ isActive }) => `icon-link ${isActive ? "active-link" : "normal-link"}`} 
               onClick={closeMenu}
+              aria-label="Register"
+              title="Register"
             >
-              Register
+              <FaUserPlus />
             </NavLink>
           </>
         )}

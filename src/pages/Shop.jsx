@@ -1,89 +1,52 @@
-import React, { useState } from "react";
-import "../Pages/CSS/Shop.css";
+import { useContext, useMemo, useState } from "react";
+import "./CSS/Shop.css";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import MyContext from "../context/data/myContext";
+import { browseCategories, products } from "../context/data/Product.js";
 
-import A from "../assets/Cavtus Love.avif";
-import B from "../assets/saidverria.avif";
-import C from "../assets/plant2.avif";
-import D from "../assets/plant3.avif";
-import E from "../assets/Cavtus Love.avif";
-import F from "../assets/logo.png";
+const parsePrice = (value) => {
+  if (!value) return 0;
+  const numeric = Number.parseFloat(String(value).replace(/[^\d.]/g, ""));
+  return Number.isNaN(numeric) ? 0 : numeric;
+};
 
-const products = [
-  {
-    id: 1,
-    name: "Huzz Cactus",
-    price: "9,999.00৳",
-    image: A,
-    badge: "New",
-  },
-  {
-    id: 2,
-    name: "Tasin's Sterra",
-    price: "9,999.00৳",
-    image: B,
-    badge: "New",
-  },
-  {
-    id: 3,
-    name: "Tasin's Ear",
-    price: "9,999.00৳",
-    image: C,
-  },
-  {
-    id: 4,
-    name: "Gyatty Cheese Plant",
-    oldPrice: "9,999.00৳",
-    price: "9,995.00৳",
-    image: D,
-    badge: "Sale",
-  },
-  {
-    id: 5,
-    name: "Saidverria",
-    price: "9,999.00৳",
-    image: E,
-    badge: "New",
-  },
-  {
-    id: 6,
-    name: "Epstein Fig",
-    oldPrice: "50.00৳",
-    price: "46.00৳",
-    image: F,
-    badge: "Sale",
-  },
-];
+const MIN_PRICE = Math.min(...products.map((product) => parsePrice(product.price)));
+const MAX_PRICE = Math.max(...products.map((product) => parsePrice(product.price)));
 
 const Shop = () => {
-  const [price, setPrice] = useState(9999);
+  const [priceLimit, setPriceLimit] = useState(MAX_PRICE);
   const [mobileFilter, setMobileFilter] = useState(false);
   const [sortBy, setSortBy] = useState("recommended");
+  const [selectedCategory, setSelectedCategory] = useState("All Products");
+  const [lastAddedId, setLastAddedId] = useState(null);
   const navigate = useNavigate();
+  const { addToCart } = useContext(MyContext);
 
-  const parsePrice = (value) => {
-    if (!value) return 0;
-    const numeric = parseFloat(String(value).replace(/[^\d.]/g, ""));
-    return isNaN(numeric) ? 0 : numeric;
+  const filteredAndSortedProducts = useMemo(() => {
+    const filtered = products
+      .filter((product) => {
+        if (selectedCategory === "All Products") return true;
+        if (selectedCategory === "Sale") return product.badge === "Sale";
+        return product.category === selectedCategory;
+      })
+      .filter((product) => parsePrice(product.price) <= Number(priceLimit));
+
+    return filtered.sort((a, b) => {
+      if (sortBy === "price-asc") return parsePrice(a.price) - parsePrice(b.price);
+      if (sortBy === "price-desc") return parsePrice(b.price) - parsePrice(a.price);
+      if (sortBy === "name-asc") return a.name.localeCompare(b.name);
+      if (sortBy === "name-desc") return b.name.localeCompare(a.name);
+      return 0;
+    });
+  }, [priceLimit, selectedCategory, sortBy]);
+
+  const handleAddToCart = (event, product) => {
+    event.stopPropagation();
+    addToCart(product, 1);
+    setLastAddedId(product.id);
+    window.setTimeout(() => setLastAddedId(null), 1300);
   };
-
-  const sortedProducts = [...products].sort((a, b) => {
-    if (sortBy === "price-asc") {
-      return parsePrice(a.price) - parsePrice(b.price);
-    }
-    if (sortBy === "price-desc") {
-      return parsePrice(b.price) - parsePrice(a.price);
-    }
-    if (sortBy === "name-asc") {
-      return a.name.localeCompare(b.name);
-    }
-    if (sortBy === "name-desc") {
-      return b.name.localeCompare(a.name);
-    }
-    // recommended (default order)
-    return 0;
-  });
 
   return (
     <div className="shop-container">
@@ -97,60 +60,75 @@ const Shop = () => {
       </motion.h1>
 
       <div className="shop-layout">
-        {/* Sidebar */}
-        <motion.div
+        <motion.aside
           className={`sidebar ${mobileFilter ? "active" : ""}`}
           initial={{ x: -50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
         >
           <h4>Browse by</h4>
           <ul>
-            <li>All Products</li>
-            <li>Huzz Plants</li>
-            <li className="active-link">Plants of Gyatt</li>
-            <li>Commander's Handbox</li>
-            <li>Sale</li>
-            <li>Gyattscriptions</li>
+            {browseCategories.map((category) => (
+              <li key={category}>
+                <button
+                  type="button"
+                  className={`sidebar-category-btn ${
+                    selectedCategory === category ? "is-active" : ""
+                  }`}
+                  onClick={() => {
+                    setSelectedCategory(category);
+                    setMobileFilter(false);
+                  }}
+                >
+                  {category}
+                </button>
+              </li>
+            ))}
           </ul>
 
           <h4>Filter by</h4>
-
           <div className="filter-section">
             <div className="price-header">
               <span>Price</span>
-              <span>-</span>
+              <button
+                type="button"
+                className="price-reset"
+                onClick={() => setPriceLimit(MAX_PRICE)}
+              >
+                Reset
+              </button>
             </div>
 
             <input
               type="range"
-              min="46"
-              max="9999"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              min={MIN_PRICE}
+              max={MAX_PRICE}
+              value={priceLimit}
+              onChange={(event) => setPriceLimit(Number(event.target.value))}
             />
 
             <div className="price-values">
-              <span>BDT 46</span>
-              <span>BDT {price}</span>
+              <span>BDT {MIN_PRICE.toLocaleString()}</span>
+              <span>BDT {Number(priceLimit).toLocaleString()}</span>
             </div>
           </div>
-        </motion.div>
+        </motion.aside>
 
-        {/* Products */}
-          <div className="products-section">
+        <section className="products-section">
           <div className="sort-bar">
             <button
+              type="button"
               className="mobile-filter-btn"
-              onClick={() => setMobileFilter(!mobileFilter)}
+              onClick={() => setMobileFilter((prev) => !prev)}
             >
               Filters
             </button>
+
             <label className="sort-label">
               Sort by:
               <select
                 className="sort-select"
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
+                onChange={(event) => setSortBy(event.target.value)}
               >
                 <option value="recommended">Recommended</option>
                 <option value="price-asc">Price: Low to High</option>
@@ -162,14 +140,14 @@ const Shop = () => {
           </div>
 
           <div className="product-grid">
-            {sortedProducts.map((product, index) => (
-              <motion.div
+            {filteredAndSortedProducts.map((product, index) => (
+              <motion.article
                 className="product-card"
                 key={product.id}
                 onClick={() => navigate(`/details/${product.id}`)}
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.08 }}
                 whileHover={{ y: -10 }}
               >
                 <div className="image-wrapper">
@@ -178,7 +156,6 @@ const Shop = () => {
                       {product.badge}
                     </span>
                   )}
-
                   <motion.img
                     src={product.image}
                     alt={product.name}
@@ -190,15 +167,27 @@ const Shop = () => {
                 <h3>{product.name}</h3>
 
                 <div className="price">
-                  {product.oldPrice && (
-                    <span className="old">{product.oldPrice}</span>
-                  )}
+                  {product.oldPrice && <span className="old">{product.oldPrice}</span>}
                   <span>{product.price}</span>
                 </div>
-              </motion.div>
+
+                <button
+                  type="button"
+                  className={`card-add-btn ${
+                    lastAddedId === product.id ? "is-confirmed" : ""
+                  }`}
+                  onClick={(event) => handleAddToCart(event, product)}
+                >
+                  {lastAddedId === product.id ? "Added" : "Add to Cart"}
+                </button>
+              </motion.article>
             ))}
           </div>
-        </div>
+
+          {filteredAndSortedProducts.length === 0 && (
+            <p className="empty-products">No products match your selected filters.</p>
+          )}
+        </section>
       </div>
     </div>
   );

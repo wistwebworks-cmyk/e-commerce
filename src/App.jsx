@@ -18,6 +18,7 @@ import Register from './Pages/Register.jsx';
 import Shipping from './Pages/Shipping.jsx';
 import Contact from './Pages/Contact.jsx';
 import Admin from './Pages/Admin.jsx';
+import MyState from './context/data/myState.jsx';
 
 function ScrollProgress() {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -71,31 +72,33 @@ function ScrollProgress() {
 function App() {
     return (
         <AuthProvider>
-            <BrowserRouter>
-                <> 
-                    <ScrollProgress />
-                    <Navbar />
-                    <Routes>
-                        <Route path="/" element={<div className="page-full-bleed"><Home /></div>} />
-                        <Route path="/home" element={<div className="page-full-bleed"><Home /></div>} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="/shop-now" element={<Shop />} />
-                        <Route path="/cart" element={<Cart />} />
-                        <Route path="/details/:id" element={<Details />} />
-                        <Route path="/confirm" element={<Confirm />} />
-                        <Route path="/thanks" element={<Thanks />} />
-                        <Route path="/refund" element={<Refund />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/shipping" element={<Shipping />} />
-                        <Route path="/contact-us" element={<Contact />} />
-                        <Route path="/shipping-policy" element={<Shipping />} />
-                        <Route path="/contact" element={<Contact />} />
-                        <Route path="/admin-panel" element={<Admin />} />
-                    </Routes>
-                    <Footer />
-                </>
-            </BrowserRouter>
+            <MyState>
+                <BrowserRouter>
+                    <> 
+                        <ScrollProgress />
+                        <Navbar />
+                        <Routes>
+                            <Route path="/" element={<div className="page-full-bleed"><Home /></div>} />
+                            <Route path="/home" element={<div className="page-full-bleed"><Home /></div>} />
+                            <Route path="/about" element={<About />} />
+                            <Route path="/shop-now" element={<Shop />} />
+                            <Route path="/cart" element={<Cart />} />
+                            <Route path="/details/:id" element={<Details />} />
+                            <Route path="/confirm" element={<Confirm />} />
+                            <Route path="/thanks" element={<Thanks />} />
+                            <Route path="/refund" element={<Refund />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
+                            <Route path="/shipping" element={<Shipping />} />
+                            <Route path="/contact-us" element={<Contact />} />
+                            <Route path="/shipping-policy" element={<Shipping />} />
+                            <Route path="/contact" element={<Contact />} />
+                            <Route path="/admin-panel" element={<Admin />} />
+                        </Routes>
+                        <Footer />
+                    </>
+                </BrowserRouter>
+            </MyState>
         </AuthProvider>
     );
 }       

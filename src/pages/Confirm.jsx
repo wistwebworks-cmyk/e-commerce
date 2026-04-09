@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./CSS/Confirm.css";
+import MyContext from "../context/data/myContext";
 
 const Confirm = () => {
   const navigate = useNavigate();
+  const { cartCount, clearCart } = useContext(MyContext);
 
   const handleCancel = () => {
     navigate("/cart");
   };
 
   const handleConfirm = () => {
+    clearCart();
     navigate("/thanks");
   };
 
@@ -40,7 +43,7 @@ const Confirm = () => {
         <div className="confirm-summary">
           <div className="confirm-row">
             <span>Items in cart</span>
-            <span>Review in cart</span>
+            <span>{cartCount}</span>
           </div>
           <div className="confirm-row">
             <span>Shipping</span>
