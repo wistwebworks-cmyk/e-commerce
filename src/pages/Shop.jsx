@@ -2,7 +2,7 @@ import { useContext, useMemo, useState } from "react";
 import "./CSS/Shop.css";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import MyContext from "../context/data/myContext";
+import MyContext from "../context/data/myContext.jsx";
 import { browseCategories, products } from "../context/data/Product.js";
 
 const parsePrice = (value) => {

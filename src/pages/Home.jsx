@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../Pages/CSS/Home.css";
+import "./CSS/Home.css";
 import { motion, AnimatePresence } from "framer-motion";
 
 /* image */

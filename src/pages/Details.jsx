@@ -3,7 +3,7 @@ import "./CSS/Details.css";
 import { products } from "../context/data/Product.js";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
-import MyContext from "../context/data/myContext";
+import MyContext from "../context/data/myContext.jsx";
 
 const Details = () => {
   const [quantity, setQuantity] = useState(1);
